@@ -1,0 +1,67 @@
+curl -X POST "http://127.0.0.1:8000/unified" \
+-H "Content-Type: application/json" \
+-d '{
+  "postcode1_filter": "",
+  "postcode2_filter": "",
+  "start_date_filter": "2020-06-06",
+  "skip": 0,
+  "limit": 3000
+}'
+
+/api/prices 
+    SELECT * 
+    FROM default.uk_price_paid
+    LIMIT 100 OFFSET :offset;
+
+ Get Data by Date Range
+/api/prices/date-range
+    SELECT * 
+    FROM default.uk_price_paid
+    WHERE date BETWEEN :start_date AND :end_date;
+
+Get Data by Postcode
+
+Get Data by Property Type
+
+Get Data by Property Type
+
+2. Aggregate Endpoints
+a) Get Average Price by Town
+
+b) Get Max/Min Price by Postcode
+        SELECT postcode1, postcode2, MAX(price) AS max_price, MIN(price) AS min_price 
+        FROM default.uk_price_paid
+        WHERE postcode1 = :postcode1
+        GROUP BY postcode1, postcode2;
+
+ Get Total Sales by County
+This endpoint returns the total number of properties sold (and optionally the total price) in a specific county.
+
+Endpoint: /api/aggregate/total-sales/county
+
+Advanced Queries
+    a) Get Properties Sold in a Date Range, Aggregated by Town
+    This endpoint returns the number of properties sold within a specific date range, aggregated by town.
+
+    Endpoint: /api/aggregate/sales/town/date-range
+
+
+Get Average Price for Different Property Types
+This endpoint calculates the average price for each property type (terraced, semi-detached, detached, etc.).
+
+Endpoint: /api/aggregate/average-price/type
+
+
+Example API Design
+Here’s how your API could look in practice, with methods for querying and aggregation:
+
+/api/prices (GET): Get all property data with optional pagination.
+/api/prices/date-range (GET): Get property data filtered by a date range.
+/api/prices/postcode (GET): Get property data by postcode.
+/api/prices/type (GET): Get property data by property type.
+/api/aggregate/average-price/town (GET): Get average property price for each town.
+/api/aggregate/min-max/postcode (GET): Get the maximum and minimum prices in a postcode area.
+/api/aggregate/total-sales/county (GET): Get total sales and total price for each county.
+/api/aggregate/sales/town/date-range (GET): Get sales count in each town within a date range.
+/api/aggregate/average-price/type (GET): Get the average price for each property type.
+

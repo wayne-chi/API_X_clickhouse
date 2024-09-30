@@ -1,0 +1,7 @@
+requests
+clickhouse-connect
+fastapi
+pandas
+python-dotenv
+uvicorn
+pydantic
